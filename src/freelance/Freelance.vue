@@ -120,8 +120,8 @@ onMounted(() => {
   })
 
   // Skills grid stagger reveal
-  const cards = skillsGrid.value.querySelectorAll('.skill-card')
-  gsap.from(cards, {
+  const icons = skillsGrid.value.querySelectorAll('.skill-icon')
+  gsap.from(icons, {
     opacity: 0,
     y: 30,
     stagger: 0.12,
@@ -325,6 +325,7 @@ $glass: rgba(255, 255, 255, 0.03);
   }
   .project-footer {
     padding: 18px;
+    text-align: center;
     h3 {
       margin: 0 0 6px;
       color: #e9f5ff;
