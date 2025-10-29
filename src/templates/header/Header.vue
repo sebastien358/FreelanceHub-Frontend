@@ -22,6 +22,10 @@
   backdrop-filter: blur(6px);
   background: linear-gradient(180deg, rgba(5,7,11,0.55), rgba(5,7,11,0.2));
   border-bottom: 1px solid rgba(255,255,255,0.02);
+  .container {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+  }
   .header-inner {
     display:flex;
     align-items:center;
@@ -37,13 +41,9 @@
     margin-left: 22px;
     text-decoration: none;
     transition: color .2s;
-    &:hover{ color: #4fb3ff; }
+    &:hover{
+      color: #4fb3ff;
+    }
   }
 }
-
-
-.container {
-     width: min(1200px, 92%);
-     margin: 0 auto;
-   }
 </style>
