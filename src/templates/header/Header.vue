@@ -8,6 +8,7 @@
       <nav class="nav">
         <a href="#accueil">Accueil</a>
         <a href="#projets">Projets</a>
+        <a href="#">Contact</a>
       </nav>
     </div>
   </header>

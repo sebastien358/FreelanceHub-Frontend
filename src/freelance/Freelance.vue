@@ -5,11 +5,30 @@
       <div class="hero-left">
         <h1 ref="heroTitle" class="hero-title">Développeur<br />freelance</h1>
         <p class="hero-desc">Je crée des sites web sur mesure, efficaces et performants.</p>
-        <button ref="ctaBtn" class="cta-btn">Voir mes projets</button>
+        <button ref="ctaBtn" class="cta-btn">Me contacter</button>
       </div>
       <div class="hero-right">
         <!-- Remplace par ton image laptop -->
         <img src="/src/assets/images/freelance-1.jpg" alt="laptop" class="hero-mock" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="services">
+    <h2 ref="serviceTitle">Services</h2>
+    <div class="service-list" ref="serviceList">
+      <div class="service-card">
+        <h3>Création de sites web</h3>
+        <p>Sites vitrines, portfolios ou landing pages performantes et modernes.</p>
+      </div>
+      <div class="service-card">
+        <h3>Applications sur mesure</h3>
+        <p>Applications web dynamiques avec Vue.js et Symfony.</p>
+      </div>
+      <div class="service-card">
+        <h3>Optimisation & SEO</h3>
+        <p>Amélioration des performances, du référencement et de l’expérience utilisateur.</p>
       </div>
     </div>
   </section>
@@ -30,7 +49,7 @@
   </section>
 
   <!-- PROJETS -->
-  <section id="projets" class="section projets">
+  <section id="projects" class="section projects">
     <div class="container">
       <h2 class="section-title" ref="projectsTitle">Projets</h2>
       <div class="projects-grid" ref="projectsGrid">
@@ -39,18 +58,35 @@
             <img :src="p.image" :alt="p.title" />
           </div>
           <div class="project-footer">
-            <h3>{{ p.title }}</h3>
+            <h3 class="project-title">{{ p.title }}</h3>
             <p class="project-sub">{{ p.sub }}</p>
           </div>
         </article>
       </div>
     </div>
   </section>
+
+  <!-- À PROPOS -->
+  <section id="about" class="section about">
+    <h2 class="section-title">À propos</h2>
+    <p class="about-text">
+      Passionné par le développement web depuis plusieurs années, j’ai commencé à apprendre en
+      autodidacte avant de me spécialiser dans la création d’applications modernes avec
+      <span class="#">Vue.js</span> et <span class="#">Symfony</span>. J’aime concevoir des
+      interfaces fluides, performantes et élégantes, tout en restant attentif à l’expérience
+      utilisateur et aux bonnes pratiques du web.
+    </p>
+    <p class="about-text">
+      Mon objectif est de continuer à monter en compétences, d’explorer l’animation avec
+      <span class="#">GSAP</span> et d’offrir à mes futurs clients des sites à la fois rapides,
+      dynamiques et professionnels.
+    </p>
+  </section>
 </template>
 
 <script setup lang="ts">
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
@@ -63,6 +99,8 @@ const skillsTitle = ref(null)
 const skillsGrid = ref(null)
 const projectsTitle = ref(null)
 const projectsGrid = ref(null)
+const serviceTitle = ref(null)
+const serviceList = ref(null)
 
 // sample data — remplace les images par tes fichiers dans /src/assets/
 const skills = [
@@ -79,7 +117,8 @@ const projects = [
 ]
 
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
   // HERO intro
   gsap.from(heroTitle.value, {
     opacity: 0,
@@ -173,7 +212,33 @@ onMounted(() => {
       }
     })
   })
+
+  // SERVICES
+
+  gsap.from(serviceTitle.value, {
+    opacity: 0,
+    y: 60,
+    delay: 0.5,
+    duration: 0.9,
+    ease: 'power2.out',
+  })
+
+
+  const cards = serviceList.value.querySelectorAll('.service-card')
+  cards.forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      ease: 'power2.out',
+      delay: i * 0.3,
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 80%',
+      },
+    })
+  })
 })
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -251,6 +316,58 @@ $glass: rgba(255, 255, 255, 0.03);
   }
 }
 
+/* SERVICES */
+.services {
+  max-width: 1100px;
+  margin: 120px auto;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  h2 {
+    color: #3b82f6;
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .service-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .service-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 35px 25px;
+    width: 300px;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+
+    h3 {
+      margin: 10px 0 15px;
+      color: #60a5fa;
+      font-size: 1.3rem;
+    }
+
+    p {
+      color: #d4d4d4;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    &:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
 /* Competences */
 .section-title {
   font-size: 2.6rem;
@@ -300,6 +417,11 @@ $glass: rgba(255, 255, 255, 0.03);
 }
 
 /* Projects */
+.projects {
+  .section-title {
+    margin-bottom: 60px;
+  }
+}
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -327,7 +449,7 @@ $glass: rgba(255, 255, 255, 0.03);
     padding: 18px;
     text-align: center;
     h3 {
-      margin: 0 0 6px;
+      margin: 0 0 6px 0;
       color: #e9f5ff;
     }
     .project-sub {
@@ -338,6 +460,26 @@ $glass: rgba(255, 255, 255, 0.03);
   }
   &:hover img {
     transform: scale(1.06);
+  }
+}
+
+// About
+
+.about {
+  max-width: 800px;
+  margin: 100px auto;
+  text-align: center;
+  padding: 0 20px;
+  h2 {
+    color: #3b82f6;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  p {
+    color: #ccc;
+    line-height: 27px;
+    font-size: 1rem;
+    margin-bottom: 15px;
   }
 }
 
