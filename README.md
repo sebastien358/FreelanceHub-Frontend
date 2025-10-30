@@ -47,3 +47,4 @@ npm run build
 npm run lint
 ```
 # FreelanceHub
+# FreelanceHub-Frontend
