@@ -1,3 +1,250 @@
+<script setup lang="ts">
+import { ref, onMounted, nextTick } from 'vue'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// refs
+const heroTitle = ref(null)
+const ctaBtn = ref(null)
+const skillsTitle = ref(null)
+const skillsGrid = ref(null)
+const projectsTitle = ref(null)
+const projectsGrid = ref(null)
+const serviceTitle = ref(null)
+const serviceList = ref(null)
+const testimonialsTitle = ref(null)
+const testimonialsGrid = ref(null)
+
+// sample data — remplace les images par tes fichiers dans /src/assets/
+const skills = [
+  { name: 'Vue.js', icon: '/src/assets/images/vue-js.png' },
+  { name: 'Symfony', icon: '/src/assets/images/php.png' },
+  { name: 'GSAP', icon: '/src/assets/images/gsap-white.svg'},
+  { name: 'FileZilla', icon: '/src/assets/images/filezilla.png' },
+]
+
+const projects = [
+  { title: 'Application de gestion', sub: 'Vue + Symfony', image: '/src/assets/images/freelance-2.png' },
+  { title: 'E-commerce', sub: 'Frontend & API', image: '/src/assets/images/freelance-3.png'}
+]
+
+const testimonials = [
+  {
+    text: "Super collaboration ! Travail rapide, clair et efficace. Le site est fluide et très pro.",
+    name: "Julie M.",
+    role: "Graphiste freelance",
+    avatar: "/src/assets/images/avatar1.jpg"
+  },
+  {
+    text: "Une excellente expérience, le site livré est moderne et parfaitement optimisé.",
+    name: "Thomas R.",
+    role: "Entrepreneur",
+    avatar: "/src/assets/images/avatar2.jpg"
+  },
+  {
+    text: "Communication fluide, idées pertinentes, et surtout une vraie maîtrise du front-end.",
+    name: "Amélie K.",
+    role: "Chef de projet digital",
+    avatar: "/src/assets/images/avatar3.jpg"
+  }
+]
+
+onMounted(async () => {
+  await nextTick()
+  // HERO intro
+  gsap.from(heroTitle.value, {
+    opacity: 0,
+    y: 80,
+    duration: 1.1,
+    ease: 'power3.out',
+    delay: 0.15
+  })
+  gsap.from('.hero-desc', { opacity: 0, y: 40, duration: 0.9, delay: 0.35 })
+  gsap.from('.hero-mock', { opacity: 0, x: 60, duration: 1.1, delay: 0.25, ease: 'power3.out' })
+
+  // CTA entrance + hover handled with event listeners below
+  gsap.from(ctaBtn.value, {
+    opacity: 0,
+    y: 40,
+    duration: 0.9,
+    delay: 0.6,
+    ease: 'power3.out'
+  })
+
+  // CTA hover glow
+  ctaBtn.value.addEventListener('mouseenter', () => {
+    gsap.to(ctaBtn.value, { scale: 1.06, boxShadow: '0 0 20px #3B82F6, 0 0 40px #3B82F6', duration: 0.25 })
+  })
+  ctaBtn.value.addEventListener('mouseleave', () => {
+    gsap.to(ctaBtn.value, { scale: 1, boxShadow: '0 0 30px #3B82F6', duration: 0.25 })
+  })
+
+  // SERVICE
+  gsap.from(serviceTitle.value, {
+    opacity: 0,
+    y: 60,
+    delay: 0.5,
+    duration: 0.9,
+    ease: 'power2.out',
+  })
+
+  // SERVICE
+  const cards = serviceList.value.querySelectorAll('.service-card')
+  cards.forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      scale: 0.85,
+      y: 0,
+      duration: 0.6,
+      delay: i * 0.20,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: serviceList.value,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+  })
+
+  // Skills title fade on scroll
+  gsap.from(skillsTitle.value, {
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    scrollTrigger: {
+      trigger: skillsTitle.value,
+      start: 'top 75%'
+    }
+  })
+
+  // Skills grid stagger reveal
+  const icons = skillsGrid.value.querySelectorAll('.skill-icon')
+  gsap.from(icons, {
+    opacity: 0,
+    y: 30,
+    stagger: 0.12,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: skillsGrid.value,
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  })
+
+  // Projects title + cards reveal with slight upward motion + subtle parallax on images
+  gsap.from(projectsTitle.value, {
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    scrollTrigger: {
+      trigger: projectsTitle.value,
+      start: 'top 75%'
+    }
+  })
+
+
+// COMPÉTENCES
+  const projectCards = projectsGrid.value.querySelectorAll('.project-card')
+  projectCards.forEach((projectCard, i) => {
+    gsap.from(projectCard, {
+      opacity: 0,
+      y: 50,
+      duration: 0.9,
+      ease: 'power3.out',
+      delay: i * 0.3,
+      scrollTrigger: {
+        trigger: projectsGrid.value,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+  })
+
+  projectCards.forEach(card => {
+    const img = card.querySelector('img')
+    gsap.to(img, {
+      yPercent: 8,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: card,
+        scrub: true,
+        start: 'top bottom',
+        end: 'bottom top'
+      }
+    })
+  })
+
+  // Témoignages - animation d'apparition
+  gsap.from(testimonialsTitle.value, {
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    scrollTrigger: {
+      trigger: testimonialsTitle.value,
+      start: 'top 75%'
+    }
+  })
+
+  const testimonialCards = testimonialsGrid.value.querySelectorAll('.testimonial-card')
+  testimonialCards.forEach((testimonialCard) => {
+    gsap.from(testimonialCard, {
+      opacity: 0,
+      y: 0,
+      scale: 0.8,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: testimonialsGrid.value,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+  })
+
+  // A PROPOS
+  gsap.from('.about-title', {
+    opacity: 0,
+    x: -80,
+    duration: 1,
+    ease: 'power3.out',
+    delay: 0.2,
+    scrollTrigger: {
+      trigger: '.about',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  })
+
+  gsap.from('.about-text-1', {
+    opacity: 0,
+    x: 70,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.about',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  })
+
+  gsap.from('.about-text-2', {
+    opacity: 0,
+    x: -70,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.about',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  })
+
+})
+</script>
+
 <template>
   <!-- HERO -->
   <section id="accueil" class="hero section">
@@ -66,203 +313,41 @@
     </div>
   </section>
 
+  <!-- TÉMOIGNAGES -->
+  <section id="testimonials" class="section testimonials">
+    <div class="container">
+      <h2 class="section-title" ref="testimonialsTitle">Témoignages</h2>
+      <div class="testimonials-grid" ref="testimonialsGrid">
+        <article class="testimonial-card" v-for="(t, i) in testimonials" :key="i" :data-index="i">
+          <p class="testimonial-text">"{{ t.text }}"</p>
+          <div class="testimonial-author">
+            <img :src="t.avatar" alt="avatar" class="testimonial-avatar" />
+            <div>
+              <h4 class="author-name">{{ t.name }}</h4>
+              <p class="author-role">{{ t.role }}</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- À PROPOS -->
   <section id="about" class="section about">
     <h2 class="about-title">À propos</h2>
-    <p class="about-text">
+    <p class="about-text-1">
       Développeur web passionné, je conçois des sites et applications modernes alliant performance,
       fluidité et esthétique. Spécialisé dans l’écosystème Vue.js et Symfony, j’accorde une
       attention particulière à l’expérience utilisateur et à la qualité du code.
     </p>
-    <p class="about-text">
+    <p class="about-text-2">
       Mon objectif : proposer à chaque client une solution sur mesure, rapide et élégante, tout en
       continuant à innover à travers des interfaces animées et dynamiques grâce à GSAP.
     </p>
   </section>
 </template>
 
-<script setup lang="ts">
 
-import { ref, onMounted, nextTick } from 'vue'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
-
-// refs
-const heroTitle = ref(null)
-const ctaBtn = ref(null)
-const skillsTitle = ref(null)
-const skillsGrid = ref(null)
-const projectsTitle = ref(null)
-const projectsGrid = ref(null)
-const serviceTitle = ref(null)
-const serviceList = ref(null)
-
-// sample data — remplace les images par tes fichiers dans /src/assets/
-const skills = [
-  { name: 'Vue.js', icon: '/src/assets/images/vue-js.png' },
-  { name: 'Symfony', icon: '/src/assets/images/php.png' },
-  //{ name: 'Symfony', icon: '/src/assets/images/symfony.png' },
-  { name: 'GSAP', icon: '/src/assets/images/gsap-white.svg'},
-  { name: 'FileZilla', icon: '/src/assets/images/filezilla.png' },
-]
-
-const projects = [
-  { title: 'Application de gestion', sub: 'Vue + Symfony', image: '/src/assets/images/freelance-2.png' },
-  { title: 'E-commerce', sub: 'Frontend & API', image: '/src/assets/images/freelance-3.png'}
-]
-
-onMounted(async () => {
-  await nextTick()
-  // HERO intro
-  gsap.from(heroTitle.value, {
-    opacity: 0,
-    y: 80,
-    duration: 1.1,
-    ease: 'power3.out',
-    delay: 0.15
-  })
-  gsap.from('.hero-desc', { opacity: 0, y: 40, duration: 0.9, delay: 0.35 })
-  gsap.from('.hero-mock', { opacity: 0, x: 60, duration: 1.1, delay: 0.25, ease: 'power3.out' })
-
-  // CTA entrance + hover handled with event listeners below
-  gsap.from(ctaBtn.value, {
-    opacity: 0,
-    y: 40,
-    duration: 0.9,
-    delay: 0.6,
-    ease: 'power3.out'
-  })
-
-  // CTA hover glow
-  ctaBtn.value.addEventListener('mouseenter', () => {
-    gsap.to(ctaBtn.value, { scale: 1.06, boxShadow: '0 0 20px #3B82F6, 0 0 40px #3B82F6', duration: 0.25 })
-  })
-  ctaBtn.value.addEventListener('mouseleave', () => {
-    gsap.to(ctaBtn.value, { scale: 1, boxShadow: '0 0 30px #3B82F6', duration: 0.25 })
-  })
-
-  // SERVICE
-  const cards = serviceList.value.querySelectorAll('.service-card')
-  cards.forEach((card, i) => {
-    gsap.from(card, {
-      opacity: 0,
-      y: 30,
-      ease: 'power3.out',
-      duration: 0.6,
-      delay: i * 0.2,
-      scrollTrigger: {
-        trigger: serviceList.value,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      },
-    })
-  })
-
-  gsap.from('.about-title', {
-    opacity: 0,
-    x: -80,
-    duration: 1,
-    ease: 'power2.out',
-    delay: 0.2,
-    scrollTrigger: {
-      trigger: '.about',
-      start: 'top 80%',
-      toggleActions: 'play none none reverse'
-    }
-  })
-
-  gsap.from('.about-text', {
-    opacity: 0,
-    x: 80,
-    duration: 1,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: '.about',
-      start: 'top 80%',
-      toggleActions: 'play none none reverse'
-    }
-  })
-
-  // Skills title fade on scroll
-  gsap.from(skillsTitle.value, {
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    scrollTrigger: {
-      trigger: skillsTitle.value,
-      start: 'top 75%'
-    }
-  })
-
-  // Skills grid stagger reveal
-  const icons = skillsGrid.value.querySelectorAll('.skill-icon')
-  gsap.from(icons, {
-    opacity: 0,
-    y: 30,
-    stagger: 0.12,
-    duration: 0.8,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: skillsGrid.value,
-      start: 'top 80%',
-      toggleActions: 'play none none reverse'
-    }
-  })
-
-  // Projects title + cards reveal with slight upward motion + subtle parallax on images
-  gsap.from(projectsTitle.value, {
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    scrollTrigger: {
-      trigger: projectsTitle.value,
-      start: 'top 75%'
-    }
-  })
-
-  const projectCards = projectsGrid.value.querySelectorAll('.project-card')
-  gsap.from(projectCards, {
-    opacity: 0,
-    y: 50,
-    stagger: 0.12,
-    duration: 0.9,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: projectsGrid.value,
-      start: 'top 80%',
-      toggleActions: 'play none none reverse'
-    }
-  })
-
-  // small parallax on project images when card scrolls
-  projectCards.forEach(card => {
-    const img = card.querySelector('img')
-    gsap.to(img, {
-      yPercent: 8,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: card,
-        scrub: true,
-        start: 'top bottom',
-        end: 'bottom top'
-      }
-    })
-  })
-
-  // SERVICES
-
-  gsap.from(serviceTitle.value, {
-    opacity: 0,
-    y: 60,
-    delay: 0.5,
-    duration: 0.9,
-    ease: 'power2.out',
-  })
-
-})
-</script>
 
 <style lang="scss" scoped>
 /* Variables */
@@ -393,10 +478,11 @@ $glass: rgba(255, 255, 255, 0.03);
 
 /* Competences */
 .section-title {
-  font-size: 2.6rem;
+  font-size: 1.6rem;
   text-align: center;
-  margin-bottom: 28px;
-  color: $neon;
+  margin-bottom: 30px;
+  //color: $neon;
+  color: #7dc9ff;
   text-shadow: 0 8px 40px rgba($neon, 0.06);
   opacity: 1;
 }
@@ -486,6 +572,78 @@ $glass: rgba(255, 255, 255, 0.03);
   }
 }
 
+/* Témoignages */
+.testimonials {
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 80px 0;
+
+  .section-title {
+    text-align: center;
+    font-size: 2.4rem;
+    color: #4fb3ff;
+    margin-bottom: 50px;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .testimonial-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 30px 24px;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .testimonial-text {
+      color: #dbeaff;
+      font-size: 1rem;
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      .testimonial-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #4fb3ff;
+      }
+
+      .author-name {
+        color: #fff;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .author-role {
+        color: #9aa7b6;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+    }
+  }
+}
+
 // About
 
 .about {
@@ -498,7 +656,8 @@ $glass: rgba(255, 255, 255, 0.03);
     font-size: 2rem;
     margin-bottom: 20px;
   }
-  .about-text {
+  .about-text-1,
+  .about-text-2 {
     color: #ccc;
     line-height: 27px;
     font-size: 1rem;

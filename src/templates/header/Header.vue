@@ -7,8 +7,7 @@
       <div class="brand">Sébastien Petit</div>
       <ul class="d-flex align-items-center header-link">
         <li><router-link to="/freelance">Accueil</router-link></li>
-        <!--<li><router-link to="">Projets</router-link></li>-->
-        <li><router-link to="">Contact</router-link></li>
+        <li><router-link to="/contact">Contact</router-link></li>
         <li><router-link to="/login">Connexion</router-link></li>
       </ul>
     </div>
@@ -24,9 +23,14 @@
   backdrop-filter: blur(6px);
   background: linear-gradient(180deg, rgba(5,7,11,0.55), rgba(5,7,11,0.2));
   border-bottom: 1px solid rgba(255,255,255,0.02);
+  padding: 0 55px 0 40px;
+  @media (max-width: 900px) {
+    padding: 0 20px;
+  }
   .container {
-    width: min(1200px, 92%);
     margin: 0 auto;
+    max-width: 1200px;
+
   }
   .header-inner {
     display: flex;
