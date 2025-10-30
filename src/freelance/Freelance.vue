@@ -68,18 +68,15 @@
 
   <!-- À PROPOS -->
   <section id="about" class="section about">
-    <h2 class="section-title">À propos</h2>
+    <h2 class="about-title">À propos</h2>
     <p class="about-text">
-      Passionné par le développement web depuis plusieurs années, j’ai commencé à apprendre en
-      autodidacte avant de me spécialiser dans la création d’applications modernes avec
-      <span class="#">Vue.js</span> et <span class="#">Symfony</span>. J’aime concevoir des
-      interfaces fluides, performantes et élégantes, tout en restant attentif à l’expérience
-      utilisateur et aux bonnes pratiques du web.
+      Développeur web passionné, je conçois des sites et applications modernes alliant performance,
+      fluidité et esthétique. Spécialisé dans l’écosystème Vue.js et Symfony, j’accorde une
+      attention particulière à l’expérience utilisateur et à la qualité du code.
     </p>
     <p class="about-text">
-      Mon objectif est de continuer à monter en compétences, d’explorer l’animation avec
-      <span class="#">GSAP</span> et d’offrir à mes futurs clients des sites à la fois rapides,
-      dynamiques et professionnels.
+      Mon objectif : proposer à chaque client une solution sur mesure, rapide et élégante, tout en
+      continuant à innover à travers des interfaces animées et dynamiques grâce à GSAP.
     </p>
   </section>
 </template>
@@ -116,7 +113,6 @@ const projects = [
   { title: 'E-commerce', sub: 'Frontend & API', image: '/src/assets/images/freelance-3.png'}
 ]
 
-
 onMounted(async () => {
   await nextTick()
   // HERO intro
@@ -141,10 +137,52 @@ onMounted(async () => {
 
   // CTA hover glow
   ctaBtn.value.addEventListener('mouseenter', () => {
-    gsap.to(ctaBtn.value, { scale: 1.06, boxShadow: '0 15px 40px rgba(59,130,246,0.28)', duration: 0.25 })
+    gsap.to(ctaBtn.value, { scale: 1.06, boxShadow: '0 0 20px #3B82F6, 0 0 40px #3B82F6', duration: 0.25 })
   })
   ctaBtn.value.addEventListener('mouseleave', () => {
-    gsap.to(ctaBtn.value, { scale: 1, boxShadow: '0 0 0 rgba(0,0,0,0)', duration: 0.25 })
+    gsap.to(ctaBtn.value, { scale: 1, boxShadow: '0 0 30px #3B82F6', duration: 0.25 })
+  })
+
+  // SERVICE
+  const cards = serviceList.value.querySelectorAll('.service-card')
+  cards.forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 30,
+      ease: 'power3.out',
+      duration: 0.6,
+      delay: i * 0.2,
+      scrollTrigger: {
+        trigger: serviceList.value,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      },
+    })
+  })
+
+  gsap.from('.about-title', {
+    opacity: 0,
+    x: -80,
+    duration: 1,
+    ease: 'power2.out',
+    delay: 0.2,
+    scrollTrigger: {
+      trigger: '.about',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  })
+
+  gsap.from('.about-text', {
+    opacity: 0,
+    x: 80,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.about',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
   })
 
   // Skills title fade on scroll
@@ -223,22 +261,7 @@ onMounted(async () => {
     ease: 'power2.out',
   })
 
-
-  const cards = serviceList.value.querySelectorAll('.service-card')
-  cards.forEach((card, i) => {
-    gsap.from(card, {
-      opacity: 0,
-      ease: 'power2.out',
-      delay: i * 0.3,
-      scrollTrigger: {
-        trigger: card,
-        start: 'top 80%',
-      },
-    })
-  })
 })
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -361,9 +384,9 @@ $glass: rgba(255, 255, 255, 0.03);
     }
 
     &:hover {
-      transform: translateY(-10px);
+      transform: translateY(-10px) scale(1.03);
       background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
     }
   }
 }
@@ -470,12 +493,12 @@ $glass: rgba(255, 255, 255, 0.03);
   margin: 100px auto;
   text-align: center;
   padding: 0 20px;
-  h2 {
+  .about-title {
     color: #3b82f6;
     font-size: 2rem;
     margin-bottom: 20px;
   }
-  p {
+  .about-text {
     color: #ccc;
     line-height: 27px;
     font-size: 1rem;

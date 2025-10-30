@@ -5,11 +5,12 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">Sébastien Petit</div>
-      <nav class="nav">
-        <a href="#accueil">Accueil</a>
-        <a href="#projets">Projets</a>
-        <a href="#">Contact</a>
-      </nav>
+      <ul class="d-flex align-items-center header-link">
+        <li><router-link to="/freelance">Accueil</router-link></li>
+        <!--<li><router-link to="">Projets</router-link></li>-->
+        <li><router-link to="">Contact</router-link></li>
+        <li><router-link to="/login">Connexion</router-link></li>
+      </ul>
     </div>
   </header>
 </template>
@@ -28,8 +29,8 @@
     margin: 0 auto;
   }
   .header-inner {
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 20px 0;
   }
@@ -37,12 +38,17 @@
     font-weight: 600;
     color: #fff;
   }
-  .nav a {
+  .header-link a {
     color: lighten(#9aa7b6, 10%);
     margin-left: 22px;
     text-decoration: none;
     transition: color .2s;
     &:hover{
+      color: #4fb3ff;
+    }
+  }
+  .header-link {
+    a.router-link-active {
       color: #4fb3ff;
     }
   }
