@@ -32,9 +32,10 @@ $form-text: #e9f5ff;
   input, textarea {
     background: $form-bg;
     border: 2px solid $form-border;
+    color: $form-text;
     border-radius: 10px;
     padding: 12px 16px;
-    color: $form-text;
+
     transition: all 0.25s ease;
     width: 100%;
     &:focus {

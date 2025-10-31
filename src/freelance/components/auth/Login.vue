@@ -6,15 +6,13 @@ const formRef = ref(null)
 const btnLogin = ref(null)
 
 onMounted(() => {
-  // Apparition du formulaire
   gsap.from(formRef.value, {
     opacity: 0,
     scale: 0.7,
     duration: 0.8,
-    ease: 'power3.out'
+    ease: 'back.out(1.7)'
   })
 
-  // Sélection des inputs
   const inputs = formRef.value.querySelectorAll('input')
   inputs.forEach(input => {
     input.addEventListener('focus', () => {

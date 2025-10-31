@@ -7,9 +7,9 @@
       <div class="brand">Sébastien Petit</div>
       <ul class="d-flex align-items-center header-link">
         <li><router-link to="/freelance">Accueil</router-link></li>
-        <li><router-link to="/services">Services</router-link></li>
+        <li><router-link to="/service">Services</router-link></li>
+        <li><router-link to="project">Projets</router-link></li>
         <li><router-link to="/contact">Contact</router-link></li>
-        <li><router-link to="/login">Connexion</router-link></li>
       </ul>
     </div>
   </header>
@@ -55,6 +55,14 @@
   .header-link {
     a.router-link-active {
       color: #4fb3ff;
+    }
+    a {
+      color: #bbb;
+      text-decoration: none;
+      transition: 0.3s;
+      &:hover {
+        color: #4fb3ff;
+      }
     }
   }
 }

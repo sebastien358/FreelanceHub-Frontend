@@ -65,7 +65,7 @@ onMounted(async () => {
       boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
       color: '#eaf3ff',
       duration: 0.3,
-      color: '#333',
+      color: '#e9f5ff',
       duration: 0.3,
       ease: 'power1.inOut'
     })
@@ -85,7 +85,7 @@ onMounted(async () => {
           <textarea v-else :name="field.name" rows="7"></textarea>
         </div>
       </div>
-      <button ref="btnLogin" class="btn btn-login">Soumettre</button>
+      <button class="btn btn-login">Soumettre</button>
     </div>
   </div>
 </template>
@@ -100,6 +100,7 @@ onMounted(async () => {
   .container-form {
     width: 100%;
     max-width: 550px;
+    padding: 30px 25px 20px 25px;
     .form-group label {
       font-size: 13px;
     }

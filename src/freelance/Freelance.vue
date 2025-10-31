@@ -2,6 +2,9 @@
 import { ref, onMounted, nextTick } from 'vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,6 +34,12 @@ const projects = [
   { title: 'E-commerce', sub: 'Frontend & API', image: '/src/assets/images/freelance-3.png'}
 ]
 
+const services = [
+  { title: 'Création de sites web', txt: 'Sites vitrines, portfolios ou landing pages performantes et modernes.' },
+  { title: 'Applications sur mesure', txt: 'Applications web dynamiques avec Vue.js et Symfony.' },
+  { title: 'Optimisation & SEO', txt: 'Amélioration des performances, du référencement et de l’expérience utilisateur.' }
+]
+
 const testimonials = [
   {
     text: "Super collaboration ! Travail rapide, clair et efficace. Le site est fluide et très pro.",
@@ -50,6 +59,13 @@ const testimonials = [
     role: "Chef de projet digital",
     avatar: "/src/assets/images/amelie.jpg"
   }
+]
+
+const fields = [
+  {for: 'name', type: 'text', value: '', name: 'name', placeholder: 'Votre nom'},
+  {for: 'profession', type: 'text', value: '', name: 'profession', placeholder: 'Votre profession'},
+  {for: 'image', type: 'file', value: '', name: 'image', placeholder: ''},
+  {for: 'message', type: 'textarea', value: '', name: 'message', placeholder: 'Votre témoignage...'}
 ]
 
 onMounted(async () => {
@@ -92,7 +108,9 @@ onMounted(async () => {
   })
 
   // SERVICE
-  const cards = serviceList.value.querySelectorAll('.service-card')
+
+  const cards = document.querySelectorAll('.service-card');
+
   cards.forEach((card, i) => {
     gsap.from(card, {
       opacity: 0,
@@ -102,12 +120,34 @@ onMounted(async () => {
       delay: i * 0.20,
       ease: 'power3.out',
       scrollTrigger: {
-        trigger: serviceList.value,
+        trigger: card,
         start: 'top 80%',
         toggleActions: 'play none none reverse'
       }
     })
   })
+
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, {
+        duration: 0.3,
+        y: -10,
+        scale: 1.03,
+        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.55)",
+        ease: "power2.out"
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        duration: 0.3,
+        y: 0,
+        scale: 1,
+        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.35)",
+        ease: "power2.inOut"
+      });
+    });
+  });
 
   // Skills title fade on scroll
   gsap.from(skillsTitle.value, {
@@ -145,7 +185,6 @@ onMounted(async () => {
       start: 'top 75%'
     }
   })
-
 
 // COMPÉTENCES
   const projectCards = projectsGrid.value.querySelectorAll('.project-card')
@@ -209,16 +248,15 @@ onMounted(async () => {
 
   gsap.from(refForm.value, {
     opacity: 0,
-    scale: 0.4,
+    scale: 0.6,
     duration: 1,
     ease: 'power3.out',
-    y: 150,
+    y: 70,
     scrollTrigger: {
       trigger: refForm.value,
       start: 'top: 80%',
       toggleActions: 'play none none reverse'
     }
-
   })
 
   // INPUT FORM TESTAMONIAL
@@ -267,7 +305,7 @@ onMounted(async () => {
       boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
       color: '#eaf3ff',
       duration: 0.3,
-      color: '#333',
+      color: '#e9f5ff',
       duration: 0.3,
       ease: 'power1.inOut'
     })
@@ -279,7 +317,7 @@ onMounted(async () => {
     x: -80,
     duration: 1,
     ease: 'power3.out',
-    delay: 0.5,
+    delay: 0.15,
     scrollTrigger: {
       trigger: '.about',
       start: 'top 85%',
@@ -292,7 +330,7 @@ onMounted(async () => {
     x: 70,
     duration: 1,
     ease: 'power3.out',
-    delay: 0.5,
+    delay: 0.15,
     scrollTrigger: {
       trigger: '.about',
       start: 'top 85%',
@@ -305,7 +343,7 @@ onMounted(async () => {
     x: -70,
     duration: 1,
     ease: 'power3.out',
-    delay: 0.5,
+    delay: 0.15,
     scrollTrigger: {
       trigger: '.about',
       start: 'top 85%',
@@ -313,6 +351,9 @@ onMounted(async () => {
     }
   })
 })
+function redirectToContact() {
+  router.push({path: '/contact'})
+}
 </script>
 
 <template>
@@ -322,10 +363,13 @@ onMounted(async () => {
       <div class="hero-left">
         <h1 ref="heroTitle" class="hero-title">Développeur<br />freelance</h1>
         <p class="hero-desc">Je crée des sites web sur mesure, efficaces et performants.</p>
-        <button ref="ctaBtn" class="cta-btn">Me contacter</button>
+        <button @click="redirectToContact()" ref="ctaBtn" class="cta-btn">
+          <router-link to="/contact" class="hero-link-contact">
+            Me contacter
+          </router-link>
+        </button>
       </div>
       <div class="hero-right">
-        <!-- Remplace par ton image laptop -->
         <img src="/src/assets/images/freelance-1.jpg" alt="laptop" class="hero-mock" />
       </div>
     </div>
@@ -335,17 +379,9 @@ onMounted(async () => {
   <section id="services" class="services">
     <h2 ref="serviceTitle">Services</h2>
     <div class="service-list" ref="serviceList">
-      <div class="service-card">
-        <h3>Création de sites web</h3>
-        <p>Sites vitrines, portfolios ou landing pages performantes et modernes.</p>
-      </div>
-      <div class="service-card">
-        <h3>Applications sur mesure</h3>
-        <p>Applications web dynamiques avec Vue.js et Symfony.</p>
-      </div>
-      <div class="service-card">
-        <h3>Optimisation & SEO</h3>
-        <p>Amélioration des performances, du référencement et de l’expérience utilisateur.</p>
+      <div class="service-card" v-for="(service, index) in services" :key="index">
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.txt }}</p>
       </div>
     </div>
   </section>
@@ -399,19 +435,18 @@ onMounted(async () => {
           </div>
         </article>
       </div>
+      <!-- Form Testamonials-->
       <form ref="refForm">
         <div class="container-form">
           <h3>Laissez votre avis</h3>
-          <div class="d-flex flex-column form-group">
-            <input type="text" id="nom" placeholder="Votre nom" />
+          <div v-for="(field, index) in fields" :key="index">
+            <div class="d-flex flex-column form-group">
+              <input v-if="field.type === 'text'" :type="field.type" :placeholder="field.placeholder" />
+              <input v-else-if="field.type === 'file'" :type="field.type" :name="field.name" />
+              <textarea v-else rows="7" :name="field.name" :placeholder="field.placeholder"></textarea>
+            </div>
           </div>
-          <div class="d-flex flex-column form-group">
-            <input type="text" id="profession" placeholder="Votre profession" />
-          </div>
-          <div class="d-flex flex-column form-group">
-            <textarea id="message" placeholder="Votre témoignage..." rows="6"></textarea>
-          </div>
-          <button type="submit" class="btn-testimonial">Envoyer</button>
+          <button class="btn-testimonial">Envoyer</button>
         </div>
       </form>
     </div>
@@ -477,11 +512,9 @@ $glass: rgba(255, 255, 255, 0.03);
 
   .cta-btn {
     background: linear-gradient(180deg, #1f6fe8, #216be2);
-    color: white;
     padding: 14px 26px;
     border-radius: 12px;
     border: none;
-    font-weight: 700;
     box-shadow: 0 10px 30px rgba(33, 107, 226, 0.14);
     cursor: pointer;
     transition:
@@ -489,6 +522,10 @@ $glass: rgba(255, 255, 255, 0.03);
       box-shadow 0.18s ease;
     &:active {
       transform: translateY(1px);
+    }
+    .hero-link-contact {
+      font-weight: 700;
+      color: white;
     }
   }
 }
@@ -535,6 +572,7 @@ $glass: rgba(255, 255, 255, 0.03);
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    transform: translateY(0px) scale(1);
     h3 {
       margin: 10px 0 15px;
       color: #60a5fa;
@@ -544,11 +582,6 @@ $glass: rgba(255, 255, 255, 0.03);
       color: #d4d4d4;
       line-height: 1.6;
       font-size: 0.95rem;
-    }
-    &:hover {
-      transform: translateY(-10px) scale(1.03);
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
     }
   }
 }
@@ -648,6 +681,11 @@ $glass: rgba(255, 255, 255, 0.03);
   }
 }
 
+$form-border: rgba(79, 179, 255, 0.4);
+$form-focus: #4fb3ff;
+$form-bg: rgba(255, 255, 255, 0.04);
+$form-text: #e9f5ff;
+
 /* Témoignages */
 .testimonials {
   background: rgba(255, 255, 255, 0.04);
@@ -670,13 +708,28 @@ $glass: rgba(255, 255, 255, 0.03);
   }
   .container-form {
     width: min(100%, 750px);
-    margin: 40px auto 0 auto;
+    margin: 60px auto 0 auto;
     padding: 25px 20px 15px 20px;
     h3 {
       margin-bottom: 22px;
     }
    .form-group {
      margin: 15px 0;
+     input[type="file"] {
+      background: $form-bg;
+       border: 1px solid $form-border;
+
+
+     }
+     input[type="file"]::file-selector-button {
+       background: $form-bg;
+       border: 2px solid $form-border;
+       color: #bcd0e4;
+       padding: 4px 8px;
+       border-radius: 3px;
+       font-size: 12px;
+       cursor: pointer;
+     }
    }
     .btn-testimonial {
       margin: 0;
