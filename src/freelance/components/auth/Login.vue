@@ -68,23 +68,5 @@ const fields = [
       color: #7dc9ff;
     }
   }
-  .btn-login {
-    margin-top: 25px;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 6px 20px rgba(33, 107, 226, 0.25);
-    background: linear-gradient(180deg, #1f6fe8, #216be2);
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(33, 107, 226, 0.4);
-    }
-  }
 }
 </style>

@@ -16,6 +16,7 @@ const serviceTitle = ref(null)
 const serviceList = ref(null)
 const testimonialsTitle = ref(null)
 const testimonialsGrid = ref(null)
+const refForm = ref(null)
 
 // sample data — remplace les images par tes fichiers dans /src/assets/
 const skills = [
@@ -35,19 +36,19 @@ const testimonials = [
     text: "Super collaboration ! Travail rapide, clair et efficace. Le site est fluide et très pro.",
     name: "Julie M.",
     role: "Graphiste freelance",
-    avatar: "/src/assets/images/avatar1.jpg"
+    avatar: "/src/assets/images/julie.jpg"
   },
   {
     text: "Une excellente expérience, le site livré est moderne et parfaitement optimisé.",
     name: "Thomas R.",
     role: "Entrepreneur",
-    avatar: "/src/assets/images/avatar2.jpg"
+    avatar: "/src/assets/images/thomas.jpg"
   },
   {
     text: "Communication fluide, idées pertinentes, et surtout une vraie maîtrise du front-end.",
     name: "Amélie K.",
     role: "Chef de projet digital",
-    avatar: "/src/assets/images/avatar3.jpg"
+    avatar: "/src/assets/images/amelie.jpg"
   }
 ]
 
@@ -204,6 +205,74 @@ onMounted(async () => {
     })
   })
 
+  // FORM TESTAMONIAL
+
+  gsap.from(refForm.value, {
+    opacity: 0,
+    scale: 0.4,
+    duration: 1,
+    ease: 'power3.out',
+    y: 150,
+    scrollTrigger: {
+      trigger: refForm.value,
+      start: 'top: 80%',
+      toggleActions: 'play none none reverse'
+    }
+
+  })
+
+  // INPUT FORM TESTAMONIAL
+
+  const inputs = refForm.value.querySelectorAll('input')
+  inputs.forEach((input) => {
+    input.addEventListener('focus', () => {
+      gsap.to(input, {
+        borderColor: '#4fb3ff',
+        boxShadow: '0 0 10px rgba(79,179,255,0.4)',
+        duration: 0.3,
+        repeat: 1,
+        yoyo: true,
+        ease: 'power1.inOut',
+      })
+    })
+  })
+
+  const textarea = refForm.value.querySelector('textarea')
+  textarea.addEventListener('focus', () => {
+    gsap.to(textarea, {
+      borderColor: '#4fb3ff',
+      boxShadow: '0 0 10px rgba(79,179,255,0.4)',
+      duration: 0.3,
+      repeat: 1,
+      yoyo: true,
+      ease: 'power1.inOut',
+      onComplete: () => {
+        gsap.to(textarea, {
+          borderColor: '#4fb3ff',
+          boxShadow: '0 0 10px rgba(79,179,255,0.4)',
+          background: '#ecf0f1',
+          color: 'black',
+          duration: 0.6,
+          ease: 'power1.inOut',
+          delay: 0.3
+        })
+      }
+    })
+  })
+
+  textarea.addEventListener('blur', () => {
+    gsap.to(textarea, {
+      background: 'rgba(255, 255, 255, 0.03)',
+      border: '1px solid rgba(79, 179, 255, 0.3)',
+      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
+      color: '#eaf3ff',
+      duration: 0.3,
+      color: '#333',
+      duration: 0.3,
+      ease: 'power1.inOut'
+    })
+  })
+
   // A PROPOS
   gsap.from('.about-title', {
     opacity: 0,
@@ -213,7 +282,7 @@ onMounted(async () => {
     delay: 0.2,
     scrollTrigger: {
       trigger: '.about',
-      start: 'top 80%',
+      start: 'top 85%',
       toggleActions: 'play none none reverse'
     }
   })
@@ -223,9 +292,10 @@ onMounted(async () => {
     x: 70,
     duration: 1,
     ease: 'power3.out',
+    delay: 0.2,
     scrollTrigger: {
       trigger: '.about',
-      start: 'top 80%',
+      start: 'top 85%',
       toggleActions: 'play none none reverse'
     }
   })
@@ -235,13 +305,13 @@ onMounted(async () => {
     x: -70,
     duration: 1,
     ease: 'power3.out',
+    delay: 0.2,
     scrollTrigger: {
       trigger: '.about',
-      start: 'top 80%',
+      start: 'top 85%',
       toggleActions: 'play none none reverse'
     }
   })
-
 })
 </script>
 
@@ -329,6 +399,21 @@ onMounted(async () => {
           </div>
         </article>
       </div>
+      <form ref="refForm">
+        <div class="container-form">
+          <h3>Laissez votre avis</h3>
+          <div class="d-flex flex-column form-group">
+            <input type="text" id="nom" placeholder="Votre nom" />
+          </div>
+          <div class="d-flex flex-column form-group">
+            <input type="text" id="profession" placeholder="Votre profession" />
+          </div>
+          <div class="d-flex flex-column form-group">
+            <textarea id="message" placeholder="Votre témoignage..." rows="6"></textarea>
+          </div>
+          <button type="submit" class="btn-testimonial">Envoyer</button>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -427,7 +512,7 @@ $glass: rgba(255, 255, 255, 0.03);
 /* SERVICES */
 .services {
   max-width: 1100px;
-  margin: 120px auto;
+  margin: 100px auto;
   padding: 60px 40px;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -481,7 +566,6 @@ $glass: rgba(255, 255, 255, 0.03);
   font-size: 1.6rem;
   text-align: center;
   margin-bottom: 30px;
-  //color: $neon;
   color: #7dc9ff;
   text-shadow: 0 8px 40px rgba($neon, 0.06);
   opacity: 1;
@@ -577,15 +661,12 @@ $glass: rgba(255, 255, 255, 0.03);
   background: rgba(255, 255, 255, 0.04);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 80px 0;
-
   .section-title {
     text-align: center;
     font-size: 2.4rem;
     color: #4fb3ff;
     margin-bottom: 50px;
   }
-
   .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -593,8 +674,23 @@ $glass: rgba(255, 255, 255, 0.03);
     @media (max-width: 900px) {
       grid-template-columns: 1fr;
     }
-  }
 
+  }
+  .container-form {
+    width: min(100%, 750px);
+    margin: 40px auto 0 auto;
+    padding: 25px 20px 15px 20px;
+    h3 {
+      margin-bottom: 22px;
+    }
+   .form-group {
+     margin: 15px 0;
+   }
+    .btn-testimonial {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
   .testimonial-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -607,7 +703,6 @@ $glass: rgba(255, 255, 255, 0.03);
       transform: translateY(-6px);
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
     }
-
     .testimonial-text {
       color: #dbeaff;
       font-size: 1rem;
@@ -615,26 +710,21 @@ $glass: rgba(255, 255, 255, 0.03);
       font-style: italic;
       margin-bottom: 20px;
     }
-
     .testimonial-author {
       display: flex;
       align-items: center;
       gap: 14px;
-
       .testimonial-avatar {
         width: 50px;
         height: 50px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid #4fb3ff;
       }
-
       .author-name {
         color: #fff;
         font-weight: 600;
         margin: 0;
       }
-
       .author-role {
         color: #9aa7b6;
         font-size: 0.9rem;
@@ -645,10 +735,9 @@ $glass: rgba(255, 255, 255, 0.03);
 }
 
 // About
-
 .about {
   max-width: 800px;
-  margin: 100px auto;
+  margin: 40px auto;
   text-align: center;
   padding: 0 20px;
   .about-title {

@@ -21,7 +21,7 @@ onMounted(async () => {
     ease: 'power3.out'
   })
 
-  const inputs = formRef.value.querySelectorAll('input, textarea')
+  const inputs = formRef.value.querySelectorAll('input')
   inputs.forEach((input) => {
     input.addEventListener('focus', () => {
       gsap.to(input, {
@@ -35,6 +35,41 @@ onMounted(async () => {
     })
   })
 
+  const textarea = formRef.value.querySelector('textarea')
+  textarea.addEventListener('focus', () => {
+    gsap.to(textarea, {
+      borderColor: '#4fb3ff',
+      boxShadow: '0 0 10px rgba(79,179,255,0.4)',
+      duration: 0.3,
+      repeat: 1,
+      yoyo: true,
+      ease: 'power1.inOut',
+      onComplete: () => {
+        gsap.to(textarea, {
+          borderColor: '#4fb3ff',
+          boxShadow: '0 0 10px rgba(79,179,255,0.4)',
+          background: '#ecf0f1',
+          color: 'black',
+          duration: 0.6,
+          ease: 'power1.inOut',
+          delay: 0.3
+        })
+      },
+    })
+  })
+
+  textarea.addEventListener('blur', () => {
+    gsap.to(textarea, {
+      background: 'rgba(255, 255, 255, 0.03)',
+      border: '1px solid rgba(79, 179, 255, 0.3)',
+      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
+      color: '#eaf3ff',
+      duration: 0.3,
+      color: '#333',
+      duration: 0.3,
+      ease: 'power1.inOut'
+    })
+  })
 })
 </script>
 
