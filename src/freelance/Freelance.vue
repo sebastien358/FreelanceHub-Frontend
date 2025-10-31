@@ -279,7 +279,7 @@ onMounted(async () => {
     x: -80,
     duration: 1,
     ease: 'power3.out',
-    delay: 0.2,
+    delay: 0.5,
     scrollTrigger: {
       trigger: '.about',
       start: 'top 85%',
@@ -292,7 +292,7 @@ onMounted(async () => {
     x: 70,
     duration: 1,
     ease: 'power3.out',
-    delay: 0.2,
+    delay: 0.5,
     scrollTrigger: {
       trigger: '.about',
       start: 'top 85%',
@@ -305,7 +305,7 @@ onMounted(async () => {
     x: -70,
     duration: 1,
     ease: 'power3.out',
-    delay: 0.2,
+    delay: 0.5,
     scrollTrigger: {
       trigger: '.about',
       start: 'top 85%',
@@ -432,8 +432,6 @@ onMounted(async () => {
   </section>
 </template>
 
-
-
 <style lang="scss" scoped>
 /* Variables */
 $bg: #070811;
@@ -494,7 +492,6 @@ $glass: rgba(255, 255, 255, 0.03);
     }
   }
 }
-
 .hero-right {
   display: flex;
   align-items: center;
@@ -522,14 +519,12 @@ $glass: rgba(255, 255, 255, 0.03);
     text-align: center;
     margin-bottom: 50px;
   }
-
   .service-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 40px;
   }
-
   .service-card {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -540,19 +535,16 @@ $glass: rgba(255, 255, 255, 0.03);
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-
     h3 {
       margin: 10px 0 15px;
       color: #60a5fa;
       font-size: 1.3rem;
     }
-
     p {
       color: #d4d4d4;
       line-height: 1.6;
       font-size: 0.95rem;
     }
-
     &:hover {
       transform: translateY(-10px) scale(1.03);
       background: rgba(255, 255, 255, 0.12);
@@ -737,7 +729,7 @@ $glass: rgba(255, 255, 255, 0.03);
 // About
 .about {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 40px auto 70px auto;
   text-align: center;
   padding: 0 20px;
   .about-title {

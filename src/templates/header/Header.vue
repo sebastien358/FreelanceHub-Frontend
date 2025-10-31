@@ -7,6 +7,7 @@
       <div class="brand">Sébastien Petit</div>
       <ul class="d-flex align-items-center header-link">
         <li><router-link to="/freelance">Accueil</router-link></li>
+        <li><router-link to="/services">Services</router-link></li>
         <li><router-link to="/contact">Contact</router-link></li>
         <li><router-link to="/login">Connexion</router-link></li>
       </ul>
