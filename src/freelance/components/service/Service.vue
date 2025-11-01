@@ -1,66 +1,113 @@
 <script lang="ts" setup>
-  import gsap from 'gsap'
-  import { onMounted, ref } from 'vue'
+import gsap from 'gsap'
+import { onMounted, ref, nextTick } from 'vue'
 
-  const serviceGrid = ref(null)
-  const serviceAdvantage = ref(null)
+const serviceGrid = ref(null)
+const serviceAdvantage = ref(null)
 
-  const mainServices = [
-    {
-      title: "🖥 Site vitrine (1 à 4 pages)",
-      description: "Présentation d’entreprise ou de service avec design responsive et animations légères.",
-      price: "400 € – 800 €",
-    },
-    {
-      title: "⚙ Site dynamique (Vue.js / Symfony)",
-      description: "Gestion de contenu, formulaires interactifs, filtrage dynamique, sécurité, base de données.",
-      price: "900 € – 1 500 €",
-    },
-    {
-      title: "🛒 Site e-commerce",
-      description: "Intégration Stripe, panier, produits, paiement sécurisé, espace client, gestion des commandes.",
-      price: "1 200 € – 2 000 €",
-    },
-    {
-      title: "🔧 Maintenance / Refonte",
-      description: "Optimisation du code, SEO, correction de bugs, amélioration de la vitesse et du design.",
-      price: "200 € – 600 €",
-    },
-    {
-      title: "📈 SEO / Référencement naturel",
-      description: "Optimisation des balises, structure sémantique, performances et accessibilité pour un meilleur positionnement sur Google.",
-      price: "250 €",
-    },
-    {
-      title: "📱 Optimisation mobile / Responsive",
-      description: "Ajustement du design et des interactions pour un rendu parfait sur tous les écrans (mobile, tablette, desktop).",
-      price: "180 €",
-    },
-  ];
+const mainServices = [
+  {
+    title: '🖥 Site vitrine (1 à 4 pages)',
+    description:
+      'Présentation d’entreprise ou de service avec design responsive et animations légères.',
+    price: '400 € – 800 €',
+  },
+  {
+    title: '⚙ Site dynamique (Vue.js / Symfony)',
+    description:
+      'Gestion de contenu, formulaires interactifs, filtrage dynamique, sécurité, base de données.',
+    price: '900 € – 1 500 €',
+  },
+  {
+    title: '🛒 Site e-commerce',
+    description:
+      'Intégration Stripe, panier, produits, paiement sécurisé, espace client, gestion des commandes.',
+    price: '1 200 € – 2 000 €',
+  },
+  {
+    title: '🔧 Maintenance / Refonte',
+    description:
+      'Optimisation du code, SEO, correction de bugs, amélioration de la vitesse et du design.',
+    price: '200 € – 600 €',
+  },
+  {
+    title: '📈 SEO / Référencement naturel',
+    description:
+      'Optimisation des balises, structure sémantique, performances et accessibilité pour un meilleur positionnement sur Google.',
+    price: '250 €',
+  },
+  {
+    title: '📱 Optimisation mobile / Responsive',
+    description:
+      'Ajustement du design et des interactions pour un rendu parfait sur tous les écrans (mobile, tablette, desktop).',
+    price: '180 €',
+  },
+]
 
-  const extraServices = [
-    { title: "Pagination dynamique", description: "Navigation fluide entre les pages ou listes d’articles.", price: "180 €" },
-    { title: "Lazy Load (chargement progressif)", description: "Optimise les performances en chargeant le contenu à la demande.", price: "200 €" },
-    { title: "Filtration / Recherche avancée", description: "Filtres dynamiques par catégorie, prix, mot-clé, tags, etc.", price: "300 €" },
-    { title: "Authentification / Sécurité complète", description: "Login, rôles utilisateurs, reset password, tokens JWT, sécurisation des routes.", price: "650 €" },
-    { title: "Animations (Vue.js / GSAP)", description: "Effets visuels, transitions fluides, apparition au scroll, parallaxe, etc.", price: "250 €" },
-    { title: "Mise en ligne / Hébergement", description: "Configuration serveur, transfert FTP, DNS, domaine, SSL, tests.", price: "220 €" },
-  ];
+const extraServices = [
+  {
+    title: 'Pagination dynamique',
+    description: 'Navigation fluide entre les pages ou listes d’articles.',
+    price: '180 €',
+  },
+  {
+    title: 'Lazy Load (chargement progressif)',
+    description: 'Optimise les performances en chargeant le contenu à la demande.',
+    price: '200 €',
+  },
+  {
+    title: 'Filtration / Recherche avancée',
+    description: 'Filtres dynamiques par catégorie, prix, mot-clé, tags, etc.',
+    price: '300 €',
+  },
+  {
+    title: 'Authentification / Sécurité complète',
+    description: 'Login, rôles utilisateurs, reset password, tokens JWT, sécurisation des routes.',
+    price: '650 €',
+  },
+  {
+    title: 'Animations (Vue.js / GSAP)',
+    description: 'Effets visuels, transitions fluides, apparition au scroll, parallaxe, etc.',
+    price: '250 €',
+  },
+  {
+    title: 'Mise en ligne / Hébergement',
+    description: 'Configuration serveur, transfert FTP, DNS, domaine, SSL, tests.',
+    price: '220 €',
+  },
+]
 
-  onMounted(() => {
-    const cards = serviceGrid.value.querySelectorAll('.service-card')
-    gsap.from(cards, {
-      opacity: 0,
-      stagger: 0.10
-    })
+onMounted(async () => {
+  await nextTick()
 
-    const elemCards = serviceAdvantage.value.querySelectorAll('.service-card')
-    gsap.from(elemCards, {
-      opacity: 0,
-      stagger: 0.10,
-      delay: 0.60
-    })
+  // Animation des cartes
+  const cards = serviceGrid.value?.querySelectorAll('.service-card')
+  if (cards) {
+    gsap.from(cards, { opacity: 0, stagger: 0.1 })
+  }
+
+  const elemCards = serviceAdvantage.value?.querySelectorAll('.service-card')
+  if (elemCards) {
+    gsap.from(elemCards, { opacity: 0, stagger: 0.1, delay: 0.6 })
+  }
+
+  // Animation du titre lettre par lettre
+  const title = document.getElementById('animated-title')
+  if (!title) return
+
+  const text = title.textContent || ''
+  title.textContent = ''
+
+
+
+  text.split('').forEach((char, i) => {
+    const span = document.createElement('span')
+    span.textContent = char
+    span.style.animationDelay = `${i * 0.05}s`
+    title.appendChild(span)
   })
+
+})
 </script>
 
 <template>
@@ -108,6 +155,19 @@
         </div>
       </div>
 
+      <section class="extra-services">
+        <h3>Services complémentaires</h3>
+        <p class="extra-note">
+          Des options supplémentaires pour affiner votre projet avant le développement.
+        </p>
+
+        <div class="extra-item">
+          <h4 id="animated-title">🎨 Maquette & Design personnalisé</h4>
+          <p>Création d’une maquette sur mesure avant développement.</p>
+          <span class="price">à partir de 150 €</span>
+        </div>
+      </section>
+
       <div class="daily-rate">
         <h2>📅 Tarif journalier</h2>
         <p>
@@ -119,7 +179,6 @@
           claire.
         </p>
       </div>
-
       <div class="cta-container">
         <router-link to="/contact" class="cta-button"> Demander un devis </router-link>
       </div>
@@ -127,7 +186,81 @@
   </section>
 </template>
 
+<style lang="scss">
+#animated-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: letterFade 0.4s forwards ease-out;
+}
+
+@keyframes letterFade {
+  from {
+
+    opacity:0; transform:
+    translateY(10px); }
+  to   {
+    opacity:1; transform: translateY(0);
+  }
+}
+</style>
+
 <style scoped lang="scss">
+@keyframes letterFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.extra-services {
+  margin-top: 4rem;
+  text-align: center;
+  h3 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #f5f5f5;
+    margin: 70px 0 12px 0;
+    letter-spacing: 0.5px;
+   }
+  .extra-note {
+    color: #9aa7b6;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .extra-item {
+    display: inline-block;
+    border-radius: 1rem;
+    padding: 1.5rem 0;
+    color: #cdd4e0;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+    &:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    #animated-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #9ec8ff;
+      display: inline-block;
+    }
+    .price {
+      display: block;
+      margin-top: 0.5rem;
+      font-weight: 600;
+      color: white;
+    }
+  }
+}
+
 .services {
   padding: 5rem 1rem;
   background: #0c0c0c;
@@ -137,14 +270,17 @@
     margin: 0 auto;
     text-align: center;
     h2 {
-      color: #4fb3ff;
+      color: #e5e5e5;
+      font-weight: 600;
       margin: 70px 0 40px 0;
+      font-size: 1.7rem;
     }
   }
   h1 {
-    font-size: 2.2rem;
-    color: #4fb3ff;
     margin-bottom: 1rem;
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #e5e5e5;
   }
   .intro {
     color: #bbb;

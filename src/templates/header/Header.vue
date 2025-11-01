@@ -31,7 +31,6 @@
   .container {
     margin: 0 auto;
     max-width: 1200px;
-
   }
   .header-inner {
     display: flex;
