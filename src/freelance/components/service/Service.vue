@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import gsap from 'gsap'
 import { onMounted, ref, nextTick } from 'vue'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const serviceGrid = ref(null)
 const serviceAdvantage = ref(null)
@@ -91,22 +94,35 @@ onMounted(async () => {
     gsap.from(elemCards, { opacity: 0, stagger: 0.1, delay: 0.6 })
   }
 
-  // Animation du titre lettre par lettre
-  const title = document.getElementById('animated-title')
-  if (!title) return
+  // Animation GSAP + ScrollTrigger
+
+  const title = document.querySelector('#animated-title')
+  if (!title) {
+    return
+  }
 
   const text = title.textContent || ''
   title.textContent = ''
 
-
-
   text.split('').forEach((char, i) => {
     const span = document.createElement('span')
-    span.textContent = char
-    span.style.animationDelay = `${i * 0.05}s`
+    span.textContent = char ===  ' ' ? '\u00A0' : char
+    span.style.animationDelay = `${i * 0.05}`
+    span.style.display = 'inline-block';
     title.appendChild(span)
   })
 
+  gsap.from('#animated-title span', {
+    opacity: 0,
+    y: 10,
+    stagger: 0.04,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '#animated-title',
+      start: 'top 80%', // quand le titre entre dans la zone visible
+      toggleActions: 'play none none none',
+    },
+  })
 })
 </script>
 
@@ -160,9 +176,9 @@ onMounted(async () => {
         <p class="extra-note">
           Des options supplémentaires pour affiner votre projet avant le développement.
         </p>
-
         <div class="extra-item">
-          <h4 id="animated-title">🎨 Maquette & Design personnalisé</h4>
+          <span>🎨 </span>
+          <h4 id="animated-title"> Maquette & Design personnalisé</h4>
           <p>Création d’une maquette sur mesure avant développement.</p>
           <span class="price">à partir de 150 €</span>
         </div>
@@ -186,37 +202,7 @@ onMounted(async () => {
   </section>
 </template>
 
-<style lang="scss">
-#animated-title span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: letterFade 0.4s forwards ease-out;
-}
-
-@keyframes letterFade {
-  from {
-
-    opacity:0; transform:
-    translateY(10px); }
-  to   {
-    opacity:1; transform: translateY(0);
-  }
-}
-</style>
-
 <style scoped lang="scss">
-@keyframes letterFade {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .extra-services {
   margin-top: 4rem;
   text-align: center;
@@ -226,7 +212,7 @@ onMounted(async () => {
     color: #f5f5f5;
     margin: 70px 0 12px 0;
     letter-spacing: 0.5px;
-   }
+  }
   .extra-note {
     color: #9aa7b6;
     font-size: 0.95rem;
@@ -250,7 +236,7 @@ onMounted(async () => {
       font-size: 1.2rem;
       font-weight: 600;
       color: #9ec8ff;
-      display: inline-block;
+      margin-bottom: 10px;
     }
     .price {
       display: block;
