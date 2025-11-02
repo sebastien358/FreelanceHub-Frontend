@@ -238,7 +238,7 @@ onMounted(async () => {
       ease: 'power3.out',
       scrollTrigger: {
         trigger: testimonialsGrid.value,
-        start: 'top 80%',
+        start: 'top 85%',
         toggleActions: 'play none none reverse'
       }
     })
@@ -249,9 +249,9 @@ onMounted(async () => {
   gsap.from(refForm.value, {
     opacity: 0,
     scale: 0.6,
-    duration: 1,
+    duration: 0.8,
+    delay: 0.4,
     ease: 'power3.out',
-    y: 70,
     scrollTrigger: {
       trigger: refForm.value,
       start: 'top: 80%',

@@ -54,7 +54,7 @@ onMounted(async () => {
           ease: 'power1.inOut',
           delay: 0.3
         })
-      },
+      }
     })
   })
 

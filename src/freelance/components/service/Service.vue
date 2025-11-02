@@ -84,14 +84,14 @@ onMounted(async () => {
   await nextTick()
 
   // Animation des cartes
-  const cards = serviceGrid.value?.querySelectorAll('.service-card')
+  const cards = serviceGrid.value.querySelectorAll('.service-card')
   if (cards) {
-    gsap.from(cards, { opacity: 0, stagger: 0.1 })
+    gsap.to(cards, { opacity: 1, stagger: 0.1 })
   }
 
-  const elemCards = serviceAdvantage.value?.querySelectorAll('.service-card')
+  const elemCards = serviceAdvantage.value.querySelectorAll('.service-card')
   if (elemCards) {
-    gsap.from(elemCards, { opacity: 0, stagger: 0.1, delay: 0.6 })
+    gsap.to(elemCards, { opacity: 1, stagger: 0.1, delay: 0.6 })
   }
 
   // Animation GSAP + ScrollTrigger
@@ -119,7 +119,7 @@ onMounted(async () => {
     ease: 'power2.out',
     scrollTrigger: {
       trigger: '#animated-title',
-      start: 'top 80%', // quand le titre entre dans la zone visible
+      start: 'top 85%', // quand le titre entre dans la zone visible
       toggleActions: 'play none none none',
     },
   })
@@ -281,6 +281,7 @@ onMounted(async () => {
   }
 }
 .service-card {
+  opacity: 0;
   position: relative;
   background: #141414;
   border-radius: 1.25rem;
