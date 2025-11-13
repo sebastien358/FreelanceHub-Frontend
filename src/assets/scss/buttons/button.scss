@@ -1,0 +1,94 @@
+.btn  {
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &-login {
+    padding: 12px 18px;
+    margin-top: 25px;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 6px 20px rgba(33, 107, 226, 0.25);
+    background: linear-gradient(180deg, #1f6fe8, #216be2);
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(33, 107, 226, 0.4);
+    }
+  }
+  &-contact {
+    padding: 12px 18px;
+    margin-top: 25px;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 6px 20px rgba(33, 107, 226, 0.25);
+    background: linear-gradient(180deg, #1f6fe8, #216be2);
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(33, 107, 226, 0.4);
+    }
+  }
+  &-testimonial {
+    padding: 12px 18px;
+    margin-top: 25px;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 6px 20px rgba(33, 107, 226, 0.25);
+    background: linear-gradient(180deg, #1f6fe8, #216be2);
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(33, 107, 226, 0.4);
+    }
+  }
+  &-reply {
+    padding: 12px;
+    background: #3b82f6;
+    font-size: 12px;
+    margin-top: 10px;
+    transition: all 125ms ease;
+    a {
+      color: #fff;
+    }
+    &:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+    }
+  }
+  &-delete {
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 12px;
+    background: #ef4444;
+    color: #fff;
+    transition: all 125ms ease;
+    &:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+  }
+  &-reset {
+    margin: 0;
+    background: #ff4444;
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background: #ff6666;
+      transform: scale(1.03);
+    }
+  }
+  &-published {
+    margin-top: 10px;
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+}
