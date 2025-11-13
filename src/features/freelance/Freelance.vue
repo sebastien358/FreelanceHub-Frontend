@@ -403,14 +403,14 @@ onMounted(async () => {
         gsap.from(testimonialCard, {
           opacity: 0,
           y: 60,
-          duration: 0.9,
+          duration: 0.6,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: testimonialsGrid.value,
             start: 'top 85%',
             toggleActions: 'play none none reverse',
           },
-          delay: i * 0.3
+          delay: i * 0.2
         })
       })
     }

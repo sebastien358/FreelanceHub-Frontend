@@ -96,19 +96,67 @@ onMounted(async () => {
   =========================== */
 
   function animationGsapService() {
+
     const cards = serviceGrid.value.querySelectorAll('.service-card')
     const elemCards = serviceAdvantage.value.querySelectorAll('.service-card')
+
     if (window.innerWidth > 576) {
       if (cards) {
-        gsap.to(cards, { opacity: 1, stagger: 0.1 })
+        gsap.from(cards, {
+          opacity: 0,
+          y: 40,
+          duration: 1,
+          stagger: 0.16,
+          scrollTrigger: {
+            trigger: cards,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        })
       }
 
       if (elemCards) {
-        gsap.to(elemCards, { opacity: 1, stagger: 0.1, delay: 0.6 })
+        gsap.from(elemCards, {
+          opacity: 0,
+          y: 40,
+          duration: 1,
+          stagger: 0.16,
+          delay: 1,
+          scrollTrigger: {
+            trigger: elemCards,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        })
       }
     } else {
+      if (cards) {
+        gsap.from(cards, {
+          opacity: 0,
+          y: 60,
+          duration: 0.6,
+          stagger: 0.10,
+          scrollTrigger: {
+            trigger: cards,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        })
+      }
 
-
+      if (elemCards) {
+        gsap.from(elemCards, {
+          opacity: 0,
+          y: 60,
+          duration: 0.6,
+          stagger: 0.10,
+          scrollTrigger: {
+            trigger: elemCards,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        })
+      }
     }
   }
 
@@ -294,23 +342,18 @@ onMounted(async () => {
 }
 
 .service-card {
-  opacity: 0;
   position: relative;
   background: #141414;
   border-radius: 1.25rem;
   padding: 2rem;
   color: #fff;
   overflow: hidden;
-  transition:
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
   border: 1px solid rgba(79, 179, 255, 0.25);
   z-index: 0;
   &:hover {
     transform: translateY(-8px) scale(1.015);
     box-shadow: 0 8px 25px rgba(79, 179, 255, 0.25);
   }
-
   &::before {
     content: '';
     position: absolute;
