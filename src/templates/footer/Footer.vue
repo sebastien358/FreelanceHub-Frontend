@@ -20,10 +20,12 @@ function logout() {
 </script>
 
 <template>
- <footer class="site-footer">
+  <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-left">
         <span>© Sébastien Petit</span>
+        <span class="separator">-</span>
+        <router-link to="/legal" >Mentions légales</router-link>
         <span class="separator">-</span>
         <div v-if="!isLogged()">
           <router-link to="/login" class="link-footer">
@@ -100,14 +102,14 @@ function logout() {
     .footer-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 3px;
       @media (max-width: 991px) {
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
       }
     }
     .separator {
-      opacity: 0.6;
+      opacity: 0.8;
       margin: 0 5px;
       @media (max-width: 991px) {
         display: none;

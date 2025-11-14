@@ -8,6 +8,8 @@ const NotFound = () => import('@/templates/not-found/NotFound.vue')
 const Admin = () => import('@/features/admin/Admin.vue')
 const RequestPassword = () => import('@/features/freelance/components/auth/reset-password/RequestPassword.vue')
 const ResetPassword = () => import('@/features/freelance/components/auth/reset-password/ResetPassword.vue')
+const Legal = () => import('@/templates/legal/Legal.vue')
+
 import { useAuthStore } from '@/stores/authStore.ts'
 import { ADMIN_ROUTES } from '@/features/admin/router/route.admin.ts'
 
@@ -31,6 +33,7 @@ const routes = [
   },
   { path: '/request-password', component: RequestPassword },
   { path: '/reset-password/:token', component: ResetPassword },
+  { path: '/legal', component: Legal },
   { path: '/:notFound(.*)*', component: NotFound }
 ]
 
