@@ -20,37 +20,7 @@ onMounted(async () => {
     FORM
   =========================== */
 
-  function initGsapTestimonialForm() {
-    if (window.innerWidth > 576) {
-      gsap.from(refForm.value, {
-        opacity: 0,
-        scale: 0.6,
-        duration: 0.8,
-        delay: 0.4,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: refForm.value,
-          start: 'top: 85%',
-          toggleActions: 'play none none reverse'
-        }
-      })
-    } else {
-      gsap.from(refForm.value, {
-        opacity: 0,
-        y: 60,
-        duration: 0.8,
-        delay: 0.4,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: refForm.value,
-          start: 'top: 85%',
-          toggleActions: 'play none none reverse'
-        }
-      })
-    }
-  }
 
-  initGsapTestimonialForm()
 
   /* ===========================
     INPUT TESTIMONIAL
@@ -279,16 +249,22 @@ const fields = [
       border: 1px solid var(--form-border);
       padding: 10px;
       font-size: 12px;
-      color: var(--muted);
+      color: gray;
+      @media (max-width: 575.98px) {
+        font-size: 10px;
+      }
     }
     input[type="file"]::file-selector-button {
       background: var(--form-bg);
       border: 2px solid var(--form-border);
-      color: var(--muted);
-      padding: 4px 8px;
+      color: gray;
+      padding: 5px 8px;
       border-radius: 3px;
       font-size: 12px;
       cursor: pointer;
+      @media (max-width: 575.98px) {
+        font-size: 10px;
+      }
     }
   }
   .alert-message {

@@ -22,6 +22,8 @@ const testimonialsTitle = ref(null)
 const testimonialsGrid = ref(null)
 
 /* ===========================
+  Skills
+
   sample data — remplace les images par tes fichiers dans /src/assets/
 =========================== */
 
@@ -69,11 +71,13 @@ import { useTestimonialStore } from '@/stores/testimonialStore.ts'
 import amelieAvatar from '@/assets/images/amelie.jpg'
 import thomasAvatar from '@/assets/images/thomas.jpg'
 import julieAvatar from '@/assets/images/julie.jpg'
+import timeline = gsap.timeline
 
 const testimonialStore = useTestimonialStore()
 
 /* ===========================
   Afficher les avis de puis la base de données
+
   const firstThreePublished = computed(() => testimonialStore.firstThreePublished)
 =========================== */
 
@@ -108,7 +112,7 @@ const testimonials = [
 ]
 
 /* ===========================
-    ANIMATIONS GSPA
+  ANIMATIONS GSPA
 =========================== */
 
 onMounted(async () => {
@@ -118,95 +122,125 @@ onMounted(async () => {
     HERO
   =========================== */
 
-  gsap.from(heroTitle.value, {
-    opacity: 0,
-    y: 80,
-    duration: 1.1,
-    ease: 'power3.out',
-    delay: 0.15,
-  })
-
-  gsap.from('.hero-desc', { opacity: 0, y: 40, duration: 0.9, delay: 0.35 })
-  gsap.from('.hero-mock', { opacity: 0, x: 60, duration: 1.1, delay: 0.25, ease: 'power3.out' })
-
-  gsap.from(ctaBtn.value, {
-    opacity: 0,
-    y: 40,
-    duration: 0.9,
-    delay: 0.6,
-    ease: 'power3.out',
-  })
-
-  /* ===========================
-    HERO
-  =========================== */
-
-  ctaBtn.value.addEventListener('mouseenter', () => {
-    gsap.to(ctaBtn.value, {
-      scale: 1.06,
-      boxShadow: '0 0 20px #3B82F6, 0 0 40px #3B82F6',
-      duration: 0.25,
+  function animationGsapHero() {
+    gsap.from(heroTitle.value, {
+      opacity: 0,
+      y: 80,
+      duration: 1.1,
+      ease: 'power3.out',
+      delay: 0.15,
     })
-  })
-  ctaBtn.value.addEventListener('mouseleave', () => {
-    gsap.to(ctaBtn.value, { scale: 1, boxShadow: '0 0 30px #3B82F6', duration: 0.25 })
-  })
+
+    gsap.from('.hero-desc', { opacity: 0, y: 40, duration: 0.9, delay: 0.35 })
+    gsap.from('.hero-mock', { opacity: 0, x: 60, duration: 1.1, delay: 0.25, ease: 'power3.out' })
+
+    gsap.from(ctaBtn.value, {
+      opacity: 0,
+      y: 40,
+      duration: 0.9,
+      delay: 0.6,
+      ease: 'power3.out',
+    })
+
+    ctaBtn.value.addEventListener('mouseenter', () => {
+      gsap.to(ctaBtn.value, {
+        scale: 1.06,
+        boxShadow: '0 0 20px #3B82F6, 0 0 40px #3B82F6',
+        duration: 0.25,
+      })
+    })
+
+    ctaBtn.value.addEventListener('mouseleave', () => {
+      gsap.to(ctaBtn.value, { scale: 1, boxShadow: '0 0 30px #3B82F6', duration: 0.25 })
+    })
+  }
+
+  animationGsapHero()
 
   /* ===========================
     SERVICES
   =========================== */
 
-  gsap.from(serviceTitle.value, {
-    opacity: 0,
-    y: 60,
-    delay: 0.5,
-    duration: 0.9,
-    ease: 'power2.out',
-  })
+  function animationGsapService() {
+    const cards = document.querySelectorAll('.service-card')
 
-  /* ===========================
-   SERVICES
-  =========================== */
-
-  const cards = document.querySelectorAll('.service-card')
-
-  cards.forEach((card, i) => {
-    gsap.from(card, {
-      opacity: 0,
-      scale: 0.85,
-      y: 0,
-      duration: 0.6,
-      delay: i * 0.2,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: card,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse',
-      },
-    })
-  })
-
-  cards.forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-      gsap.to(card, {
-        duration: 0.3,
-        y: -10,
-        scale: 1.03,
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.55)',
-        ease: 'power2.out',
+    if (window.innerWidth > 576) {
+      gsap.from(serviceTitle.value, {
+        opacity: 0,
+        y: 70,
+        duration: 0.6,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: serviceTitle.value,
+          start: 'top 75%',
+          toggleActions: 'play none none reverse',
+        },
       })
-    })
 
-    card.addEventListener('mouseleave', () => {
-      gsap.to(card, {
-        duration: 0.3,
+      gsap.from(cards, {
+        opacity: 0,
+        scale: 0.8,
         y: 0,
-        scale: 1,
-        boxShadow: '0 6px 20px rgba(0, 0, 0, 0.35)',
-        ease: 'power2.inOut',
+        duration: 0.6,
+        ease: 'power3.out',
+        stagger: 0.2,
+        delay: 0.4,
+        scrollTrigger: {
+          trigger: cards,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+      })
+    } else {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: serviceTitle.value,
+          start: 'top 75%',
+          toggleActions: 'play none none reverse',
+        },
+      })
+
+      tl.from(serviceTitle.value, {
+        opacity: 0,
+        y: 70,
+        duration: 0.6,
+        ease: 'power3.out',
+      })
+
+      tl.from(cards, {
+        opacity: 0,
+        scale: 0.8,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        stagger: 0.2,
+      })
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          duration: 0.3,
+          y: -10,
+          scale: 1.03,
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.55)',
+          ease: 'power2.out',
+        })
+      })
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          duration: 0.3,
+          y: 0,
+          scale: 1,
+          boxShadow: '0 6px 20px rgba(0, 0, 0, 0.35)',
+          ease: 'power2.inOut',
+        })
       })
     })
-  })
+  }
+
+  animationGsapService()
 
   /* ===========================
     SKILLS
@@ -214,54 +248,31 @@ onMounted(async () => {
 
   function initGsapLogoSkill() {
     const icons = skillsGrid.value.querySelectorAll('.skill-icon')
-    if (window.innerWidth > 576) {
-      gsap.from(skillsTitle.value, {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: skillsTitle.value,
-          start: 'top 75%',
-        },
-      })
 
-      gsap.from(icons, {
-        opacity: 0,
-        y: 30,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: 'power3.out',
-        //delay: 0.25,
-        scrollTrigger: {
-          trigger: skillsGrid.value,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        }
-      })
-    } else {
-      gsap.from(skillsTitle.value, {
-        opacity: 0,
-        y: 60,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: skillsTitle.value,
-          start: 'top 75%',
-        },
-      })
+    const isDesktop = window.innerWidth > 576
 
-      gsap.from(icons, {
-        opacity: 0,
-        y: 60,
-        stagger: 0.12,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: skillsGrid.value,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-    }
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: skillsTitle.value,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
+      },
+    })
+
+    tl.from(skillsTitle.value, {
+      opacity: 0,
+      y: isDesktop ? 30 : 60,
+      duration: isDesktop ? 0.8 : 0.6,
+      ease: 'power1.out',
+    })
+
+    tl.from(icons, {
+      opacity: 0,
+      y: isDesktop ? 30 : 60,
+      duration: isDesktop ? 0.8 : 0.6,
+      stagger: isDesktop ? 0.2 : 0.15,
+      ease: 'power1.out',
+    })
   }
 
   initGsapLogoSkill()
@@ -272,87 +283,32 @@ onMounted(async () => {
 
   function initGsapProject() {
 
-    if (window.innerWidth > 576) {
-      gsap.from(projectsTitle.value, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: projectsTitle.value,
-          start: 'top 75%',
-        }
-      })
+    const projectCards = projectsGrid.value.querySelectorAll('.project-card')
+    const isDesktop = window.innerWidth > 576
 
-      const projectCards = projectsGrid.value.querySelectorAll('.project-card')
-      projectCards.forEach((projectCard, i) => {
-        gsap.from(projectCard, {
-          opacity: 0,
-          y: 50,
-          duration: 0.9,
-          ease: 'power3.out',
-          delay: i * 0.3,
-          scrollTrigger: {
-            trigger: projectsGrid.value,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        })
-      })
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: projectsTitle.value,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse',
+      },
+    })
 
-      projectCards.forEach((card) => {
-        const img = card.querySelector('img')
-        gsap.to(img, {
-          yPercent: 8,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: card,
-            scrub: true,
-            start: 'top bottom',
-            end: 'bottom top',
-          },
-        })
-      })
-    } else {
-      gsap.from(projectsTitle.value, {
-        opacity: 0,
-        y: 60,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: projectsTitle.value,
-          start: 'top 75%',
-        }
-      })
+    tl.from(projectsTitle.value, {
+      opacity: 0,
+      y: isDesktop ? 30 : 60,
+      duration: isDesktop ? 0.8 : 0.6,
+      ease: 'power3.out',
+    })
 
-      const projectCards = projectsGrid.value.querySelectorAll('.project-card')
-      projectCards.forEach((projectCard, i) => {
-        gsap.from(projectCard, {
-          opacity: 0,
-          y: 60,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: projectsGrid.value,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-          delay: i * 0.3
-        })
-      })
-
-      projectCards.forEach((card) => {
-        const img = card.querySelector('img')
-        gsap.to(img, {
-          yPercent: 8,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: card,
-            scrub: true,
-            start: 'top bottom',
-            end: 'bottom top',
-          },
-        })
-      })
-    }
+    tl.from(projectCards, {
+      opacity: 0,
+      scale: 0.9,
+      y: isDesktop ? 30 : 60,
+      duration: isDesktop ? 0.6 : 0.8,
+      ease: 'power1.out',
+      stagger: isDesktop ? 0.3 : 0.4,
+    });
   }
 
   initGsapProject()
@@ -362,58 +318,39 @@ onMounted(async () => {
   =========================== */
 
   function initAnimationsTestimonial() {
-    if (window.innerWidth > 576) {
-      gsap.from(testimonialsTitle.value, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: testimonialsTitle.value,
-          start: 'top 75%',
-        },
-      })
+    const testimonialCards = testimonialsGrid.value.querySelectorAll('.testimonial-card')
+    const testimonialForm = document.querySelector('.testimonial-form')
 
-      const testimonialCards = testimonialsGrid.value.querySelectorAll('.testimonial-card')
-      testimonialCards.forEach((testimonialCard) => {
-        gsap.from(testimonialCard, {
-          opacity: 0,
-          scale: 0.8,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: testimonialsGrid.value,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          }
-        })
-      })
-    } else {
-      gsap.from(testimonialsTitle.value, {
-        opacity: 0,
-        y: 60,
-        duration: 0.9,
-        scrollTrigger: {
-          trigger: testimonialsTitle.value,
-          start: 'top 75%',
-        },
-      })
+    const isDesktop = window.innerWidth > 576
 
-      const testimonialCards = testimonialsGrid.value.querySelectorAll('.testimonial-card')
-      testimonialCards.forEach((testimonialCard, i) => {
-        gsap.from(testimonialCard, {
-          opacity: 0,
-          y: 60,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: testimonialsGrid.value,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-          delay: i * 0.2
-        })
-      })
-    }
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: testimonialsTitle.value,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
+      },
+    })
+
+    tl.from(testimonialsTitle.value, {
+      opacity: 0,
+      y: isDesktop ? 40 : 60,
+      duration: 0.6,
+    })
+
+    tl.from(testimonialCards, {
+      opacity: 0,
+      y: isDesktop ? 40 : 60,
+      duration: 0.6,
+      ease: 'power3.out',
+      stagger: 0.2,
+    })
+
+    tl.from(testimonialForm, {
+      opacity: 0,
+      y: isDesktop ? 40 : 60,
+      duration: 0.6,
+      ease: 'power3.out',
+    })
   }
 
   initAnimationsTestimonial()
@@ -423,85 +360,46 @@ onMounted(async () => {
   =========================== */
 
   function initGsapAbout() {
-    if (window.innerWidth > 576) {
-      gsap.from('.about-title', {
-        opacity: 0,
-        x: -80,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
+    const isDesktop = window.innerWidth > 576
 
-      gsap.from('.about-text-1', {
-        opacity: 0,
-        x: 70,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
+    gsap.from('.about-title', {
+      opacity: 0,
+      x: isDesktop ? -80 : -50,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.15,
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
+      },
+    })
 
-      gsap.from('.about-text-2', {
-        opacity: 0,
-        x: -70,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-    } else {
-      gsap.from('.about-title', {
-        opacity: 0,
-        x: -40,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
+    gsap.from('.about-text-1', {
+      opacity: 0,
+      x: isDesktop ? 70 : 40,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.15,
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
+      },
+    })
 
-      gsap.from('.about-text-1', {
-        opacity: 0,
-        x: 30,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-
-      gsap.from('.about-text-2', {
-        opacity: 0,
-        x: -30,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-    }
+    gsap.from('.about-text-2', {
+      opacity: 0,
+      x: isDesktop ? -70 : -40,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.15,
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
+      },
+    })
   }
 
   initGsapAbout()
@@ -520,7 +418,7 @@ function redirectToContact() {
         <div class="hero-left">
           <h1 ref="heroTitle" class="hero-title">Développeur web<br />freelance</h1>
           <p class="hero-desc">Je crée des sites modernes et efficaces, adaptés à vos besoins.</p>
-          <button @click="redirectToContact()" ref="ctaBtn" class="cta-btn">
+          <button @click="redirectToContact()" ref="ctaBtn" class="btn btn-cta">
             <router-link to="/contact" class="hero-link-contact"> Me contacter </router-link>
           </button>
         </div>
@@ -673,24 +571,6 @@ function redirectToContact() {
       line-height: 24px;
     }
   }
-  .cta-btn {
-    background: linear-gradient(180deg, #1f6fe8, #216be2);
-    padding: 14px 26px;
-    border-radius: 12px;
-    border: none;
-    box-shadow: 0 10px 30px rgba(33, 107, 226, 0.14);
-    cursor: pointer;
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease;
-    &:active {
-      transform: translateY(1px);
-    }
-    .hero-link-contact {
-      font-weight: 700;
-      color: white;
-    }
-  }
 }
 
 .hero-right {
@@ -742,7 +622,6 @@ function redirectToContact() {
     padding: 35px 25px;
     width: 300px;
     text-align: center;
-    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     transform: translateY(0px) scale(1);
@@ -913,7 +792,6 @@ function redirectToContact() {
     border-radius: 14px;
     padding: 30px 24px;
     backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     &:hover {
       transform: translateY(-6px);

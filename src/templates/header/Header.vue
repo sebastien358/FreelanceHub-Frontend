@@ -64,7 +64,6 @@ onMounted(async () => {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-
   z-index: 100;
   position: sticky;
   top: 0;
@@ -135,8 +134,8 @@ onMounted(async () => {
   }
   &__link {
     position: absolute;
-    top: 52px;
-    right: 0;
+    top: 46px;
+    right: 11px;
     display: flex;
     flex-direction: column;
     row-gap: 12px;

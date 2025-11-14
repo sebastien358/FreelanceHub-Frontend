@@ -10,9 +10,10 @@ import gsap from 'gsap'
 const formRef = ref(null)
 const btnLogin = ref(null)
 
-// GSPA - ANIMATIONS
+/* ===========================
+  ANIMATIONS GSAP
+=========================== */
 
-// Animation form login
 onMounted(() => {
   gsap.from(formRef.value, {
     opacity: 0,
@@ -21,7 +22,10 @@ onMounted(() => {
     ease: 'back.out(1.7)',
   })
 
-  // Animation inputs login
+  /* ===========================
+    Animations inputs form
+  =========================== */
+
   const inputs = formRef.value.querySelectorAll('input')
   inputs.forEach((input) => {
     input.addEventListener('focus', () => {
@@ -36,7 +40,10 @@ onMounted(() => {
     })
   })
 
-  // Animation error fields
+  /* ===========================
+    Animations errors fields
+  =========================== */
+
   const errors = formRef.value.querySelectorAll('.error-field')
   errors.forEach((error) => {
     gsap.from(error, {
@@ -48,7 +55,9 @@ onMounted(() => {
   })
 })
 
-// Intégrartion formulaire vee-validate
+/* ===========================
+  INTEGRATION FORM LOGIN
+=========================== */
 
 const authStore = useAuthStore()
 
@@ -164,7 +173,11 @@ const fields = [
   }
   .container-form {
     h2 {
+      font-size: 27px;
       color: #7dc9ff;
+      @media (max-width: 576px) {
+        font-size: 24px;
+      }
     }
     .forgotten-password {
       display: flex;
@@ -176,6 +189,9 @@ const fields = [
       font-style: italic;
       opacity: 0.9;
       transition: opacity 125ms ease;
+      @media (max-width: 576px) {
+        font-size: 9px;
+      }
       &:hover {
         opacity: 1;
       }

@@ -1,8 +1,8 @@
 import type { TestamonialFormInterface, TestamonialInterface } from '@/shared/interfaces'
 import axios from 'axios'
 
-//const BASE_URL = 'https://api.sebastien-petit.fr'
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = 'https://api.sebastien-petit.fr'
+//const BASE_URL = 'http://localhost:8000'
 
 export async function axiosTestimonialList(): Promise<TestamonialInterface[] | TestamonialInterface> {
   try {

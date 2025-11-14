@@ -14,38 +14,43 @@ const btnLogin = ref(null)
 
 // Animation form login
 onMounted(() => {
-  gsap.from(formRef.value, {
-    opacity: 0,
-    scale: 0.7,
-    duration: 0.8,
-    ease: 'back.out(1.7)',
-  })
 
-  // Animation inputs login
-  const inputs = formRef.value.querySelectorAll('input')
-  inputs.forEach((input) => {
-    input.addEventListener('focus', () => {
-      gsap.to(input, {
-        borderColor: '#4fb3ff',
-        boxShadow: '0 0 10px rgba(79,179,255,0.4)',
-        duration: 0.3,
-        repeat: 1,
-        yoyo: true,
-        ease: 'power1.inOut',
+  function animationFormLogin() {
+    gsap.from(formRef.value, {
+      opacity: 0,
+      scale: 0.7,
+      duration: 0.8,
+      ease: 'back.out(1.7)',
+    })
+
+    // Animation inputs login
+    const inputs = formRef.value.querySelectorAll('input')
+    inputs.forEach((input) => {
+      input.addEventListener('focus', () => {
+        gsap.to(input, {
+          borderColor: '#4fb3ff',
+          boxShadow: '0 0 10px rgba(79,179,255,0.4)',
+          duration: 0.3,
+          repeat: 1,
+          yoyo: true,
+          ease: 'power1.inOut',
+        })
       })
     })
-  })
 
-  // Animation error fields
-  const errors = formRef.value.querySelectorAll('.error-field')
-  errors.forEach((error) => {
-    gsap.from(error, {
-      opacity: 0,
-      scale: 0,
-      duration: 2,
-      ease: 'power1.out'
+    // Animation error fields
+    const errors = formRef.value.querySelectorAll('.error-field')
+    errors.forEach((error) => {
+      gsap.from(error, {
+        opacity: 0,
+        scale: 0,
+        duration: 2,
+        ease: 'power1.out'
+      })
     })
-  })
+  }
+
+
 })
 
 // Intégrartion formulaire vee-validate
@@ -136,7 +141,7 @@ const fields = [
             </span>
           </div>
         </div>
-        <p v-if="!errorEmail && !successMessage && !errorMessage">
+        <p class="reset-instruction" v-if="!errorEmail && !successMessage && !errorMessage">
           Vous recevrez un lien pour réinitialiser votre mot de passe.
         </p>
         <AlertMessage
@@ -155,7 +160,7 @@ const fields = [
           @close="closeFields"
           class="alert"
         />
-        <button ref="btnLogin" class="btn btn-login" :disabled="isSubmitting">
+        <button ref="btnLogin" class="btn btn-reset-password" :disabled="isSubmitting">
           Envoyer le lien
         </button>
       </form>
@@ -180,28 +185,34 @@ const fields = [
     h2 {
       color: #7dc9ff;
       margin-bottom: 15px;
-      font-size: 23px;
+      font-size: 21px;
+      @media (max-width: 576px) {
+        font-size: 18px;
+      }
     }
     .form-group {
       margin: 0;
       .error-field {
         color: var(--form-text);
-        font-size: 12px;
         margin: 5px 0 15px 4px;
       }
     }
-    p {
+    .reset-instruction {
       color: #a8a8a8;
       font-size: 12px;
       text-align: start;
       margin: -15px 15px 15px 4px;
       font-style: italic;
+      @media (max-width: 576px) {
+        font-size: 10px;
+      }
     }
     .alert {
       margin: -10px 0 15px;
     }
     .btn {
       margin: 0;
+
     }
   }
 }

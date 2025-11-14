@@ -177,7 +177,7 @@ const fields = [
         </div>
         <AlertMessage v-if="successMessage" :message="successMessage" type="success" to="" @close="handleResetForm" class="alert" />
         <AlertMessage v-if="errorMessage" :message="errorMessage" type="success" to="" @close="closeFields" class="alert" />
-        <button class="btn btn-login" :disabled="isSubmitting">Envoyer</button>
+        <button class="btn btn-contact" :disabled="isSubmitting">Envoyer</button>
       </form>
     </div>
   </div>
@@ -188,7 +188,6 @@ const fields = [
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,6 +197,13 @@ const fields = [
     width: 100%;
     max-width: 500px;
     padding: 30px 25px 20px 25px;
+    h2 {
+      font-size: 27px;
+      color: #7dc9ff;
+      @media (max-width: 576px) {
+        font-size: 23px;
+      }
+    }
     .form-group label {
       font-size: 13px;
     }

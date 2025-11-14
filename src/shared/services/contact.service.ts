@@ -1,8 +1,8 @@
 import type { ContactFormInterface, ContactInterface } from '@/shared/interfaces'
 import axios from 'axios'
 
-//const BASE_URL = 'https://api.sebastien-petit.fr'
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = 'https://api.sebastien-petit.fr'
+//const BASE_URL = 'http://localhost:8000'
 
 export async function axiosContactAdd(dataContact: ContactFormInterface): Promise<void> {
   try {
