@@ -1,9 +1,25 @@
 <script setup lang="ts">
+import gsap from 'gsap'
+import { onMounted, ref } from 'vue'
+
+const legal = ref<HTMLElement | null>(null)
+
+onMounted(async () => {
+  function animationLegal() {
+    gsap.from(legal.value, {
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.6,
+      ease: 'power2.out'
+    })
+  }
+
+  animationLegal()
+})
 </script>
 
-// src/components/LegalPage.vue
 <template>
-  <div class="container">
+  <div class="container" ref="legal">
     <section class="legal-page">
       <h1>Mentions légales</h1>
       <p><strong>Nom :</strong> Sébastien Petit</p>
@@ -26,9 +42,9 @@
   }
 }
 .legal-page {
-  padding: 3rem 2rem;
+  padding: 2rem 2rem;
   width: 100%;
-  max-width: 900px;
+  max-width: 700px;
   margin: 6rem auto;
   border-radius: 12px;
   background: #ffffff;
